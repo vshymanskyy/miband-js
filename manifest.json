@@ -7,8 +7,8 @@
   "orientation": "portrait",
 
   "lang": "en",
-  "background_color": "#2c1a31",
-  "theme_color": "#2c1a31",
+  "background_color": "#fff",
+  "theme_color": "#fff",
 
   "icons": [
     {
