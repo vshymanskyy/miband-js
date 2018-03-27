@@ -23,6 +23,7 @@ Head to https://vshymanskyy.github.io/miband-js/
 
 You need a browser with [WebBluettoth support](https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md). Tested with:
 - Chrome on Linux (with enabled experimental flag)
+- Chrome on OS X
 - Chrome on Android (6.0+)
 
 ### Node.js
