@@ -1,6 +1,14 @@
 # Mi Band 2 JS library
 
-Playing around with the [**Mi Band 2**](http://www.mi.com/en/miband2/).
+Playing around with the [**Mi Band 2**](http://www.mi.com/en/miband2/)
+
+## Features
+- Authentication
+- Device info: time, battery status, hw/sw versions, etc.
+- Button tap event
+- Notifications: message, phone, vibrate
+- Heart Rate Monitor
+- Realtime data (soon)
 
 ![demo](/public/demo.png)
 
@@ -45,7 +53,8 @@ const device = await bluetooth.requestDevice({
 const server = await device.gatt.connect();
 
 let miband = new MiBand(server);
-    
+await miband.init();
+
 log('Notifications demo...')
 await miband.showNotification('message');
 ```
