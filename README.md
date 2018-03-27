@@ -62,5 +62,5 @@ await miband.showNotification('message');
 ## Available API
 
 ```js
-
+TODO
 ```
