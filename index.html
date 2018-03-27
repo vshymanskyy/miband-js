@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="manifest" href="manifest.json">
+    <!-- link rel="stylesheet" href="styles.css" -->
+
+    <title>Mi Band 2</title>
+  </head>
+
+  <body>
+    <button id="scanBtn">Scan</button>
+    <pre id="output"></pre>
+
+    <script src="webapp.bundle.js"></script>
+
+    <script>
+      /* TODO
+      var deferredPrompt;
+
+      window.addEventListener('beforeinstallprompt', function(e) {
+        console.log('beforeinstallprompt Event fired');
+        //e.preventDefault();
+
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+
+        //return false;
+      });
+
+      btnSave.addEventListener('click', function() {
+        if(deferredPrompt !== undefined) {
+          // The user has had a positive interaction with our app and Chrome
+          // has tried to prompt previously, so let's show the prompt.
+          deferredPrompt.prompt();
+
+          // Follow what the user has done with the prompt.
+          deferredPrompt.userChoice.then(function(choiceResult) {
+
+            console.log(choiceResult.outcome);
+
+            if(choiceResult.outcome == 'dismissed') {
+              console.log('User cancelled home screen install');
+            }
+            else {
+              console.log('User added to home screen');
+            }
+
+            // We no longer need the prompt.  Clear it up.
+            deferredPrompt = null;
+          });
+        }
+      });
+
+      // Install service worker - for offline support
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceworker.js');
+      }
+      */
+    </script>
+  </body>
+</html>
