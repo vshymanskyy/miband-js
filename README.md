@@ -44,6 +44,8 @@ const device = await bluetooth.requestDevice({
 
 const server = await device.gatt.connect();
 
+let miband = new MiBand(server);
+    
 log('Notifications demo...')
 await miband.showNotification('message');
 ```
