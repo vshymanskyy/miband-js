@@ -19,7 +19,7 @@ You should be able to bind it back again, but no guaranee here ;)
 
 ### Browser
 
-Head to https://vshymanskyy.github.io/miband-js/
+Head to https://tiny.cc/miband-js
 
 You need a browser with [WebBluettoth support](https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md). Tested with:
 - Chrome on Linux (with enabled experimental flag)
