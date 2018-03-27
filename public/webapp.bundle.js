@@ -7445,9 +7445,9 @@ async function test_all(miband, log) {
   log('Notifications demo...');
   await miband.showNotification('message');
   await delay(3000);
-  //await miband.showNotification('phone');
-  //await delay(5000);
-  //await miband.showNotification('off');
+  await miband.showNotification('phone');
+  await delay(5000);
+  await miband.showNotification('off');
 
   log('Tap MiBand button, quick!');
   miband.on('button', () => log('Tap detected'));
@@ -7467,6 +7467,8 @@ async function test_all(miband, log) {
   await miband.hrmStart();
   await delay(30000);
   await miband.hrmStop();
+
+  log('Finished.');
 }
 
 var test = test_all;
