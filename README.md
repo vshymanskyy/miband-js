@@ -59,8 +59,4 @@ log('Notifications demo...')
 await miband.showNotification('message');
 ```
 
-## Available API
-
-```js
-TODO
-```
+For more API examples, see https://github.com/vshymanskyy/miband-js/blob/master/src/test.js
