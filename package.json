@@ -11,6 +11,7 @@
   "scripts": {
     "start": "ecstatic ./public --port 8080",
     "build": "rollup -c ./.rollup.js",
+    "gh-deploy": "git subtree push --prefix dist origin gh-pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
