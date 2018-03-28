@@ -46,13 +46,13 @@ const AB = function() {
 
 function parseDate(buff) {
   let year = buff.readUInt16LE(0),
-    mon = buff[2],
+    mon = buff[2]-1,
     day = buff[3],
     hrs = buff[4],
     min = buff[5],
-    sec = buff[6];
-    //msec = buff[8] * 1000 / 256;
-  return new Date([year, mon, day, hrs, min, sec])
+    sec = buff[6],
+    msec = buff[8] * 1000 / 256;
+  return new Date(year, mon, day, hrs, min, sec)
 }
 
 class MiBand extends EventEmitter {
@@ -218,8 +218,8 @@ class MiBand extends EventEmitter {
     let result = {}
     result.level = data[1]
     result.charging = !!data[2]
-    result.off_date = parseDate(data.slice(3, 11))
-    result.charge_date = parseDate(data.slice(11, 19))
+    result.off_date = parseDate(data.slice(3, 10))
+    result.charge_date = parseDate(data.slice(11, 18))
     //result.charge_num = data[10]
     result.charge_level = data[19]
     return result;
@@ -232,7 +232,7 @@ class MiBand extends EventEmitter {
   }
 
   async getSerial() {
-    if (!this.char.info_serial) return 'unknown';
+    if (!this.char.info_serial) return undefined;
     let data = await this.char.info_serial.readValue()
     return this.textDec.decode(data)
   }
