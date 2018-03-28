@@ -1,7 +1,7 @@
 # Mi Band 2 JS library
 
 A clean implementation of [**Mi Band 2**](http://www.mi.com/en/miband2/) library for Browsers and Node.js, using WebBluetooth API.
-![demo](/public/demo.png)
+![demo](https://github.com/vshymanskyy/miband-js/blob/master/public/demo.png)
 
 ## Setting up
 
@@ -10,7 +10,7 @@ You should be able to bind it back again, but no guaranee here ;)
 
 ### Browser
 
-[![LIVE DEMO](/public/live-demo-btn.png)](https://tiny.cc/miband-js)
+[![LIVE DEMO](https://github.com/vshymanskyy/miband-js/blob/master/public/live-demo-btn.png)](https://tiny.cc/miband-js)
 
 You need a browser with [WebBluetooth support](https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md). Tested with:
 - Chrome on OS X (Yosemite or later)
@@ -20,7 +20,7 @@ You need a browser with [WebBluetooth support](https://github.com/WebBluetoothCG
 ### Node.js
 
 ```sh
-npm install -g https://github.com/vshymanskyy/miband-js.git
+npm install miband -g
 miband-test
 ```
 
@@ -65,4 +65,4 @@ For more API examples, see https://github.com/vshymanskyy/miband-js/blob/master/
 ---
 ## Contributing
 
-Please check out [DEVELOPMENT.md](/DEVELOPMENT.md)
+Please check out [DEVELOPMENT.md](https://github.com/vshymanskyy/miband-js/blob/master/DEVELOPMENT.md)
