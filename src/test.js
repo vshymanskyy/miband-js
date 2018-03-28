@@ -6,7 +6,6 @@ function delay(ms) {
 
 async function test_all(miband, log) {
 
-  log('Fetching device info...')
   let info = {
     time:     await miband.getTime(),
     battery:  await miband.getBatteryInfo(),
@@ -14,7 +13,11 @@ async function test_all(miband, log) {
     fw_ver:   await miband.getSwRevision(),
     serial:   await miband.getSerial(),
   }
-  log('Info:', JSON.stringify(info, null, 2))
+
+  log(`HW ver: ${info.hw_ver}  SW ver: ${info.sw_ver}`);
+  info.serial && log(`Serial: ${info.serial}`);
+  log(`Battery: ${info.battery.level}%`);
+  log(`Time: ${info.time.toLocaleString()}`);
 
   log('Notifications demo...')
   await miband.showNotification('message');
