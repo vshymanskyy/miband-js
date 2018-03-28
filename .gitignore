@@ -10,3 +10,6 @@ coverage
 
 # Dependency directory
 node_modules
+
+rollup.build.css
+package-lock.json
