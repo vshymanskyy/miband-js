@@ -7179,13 +7179,13 @@ const AB = function() {
 
 function parseDate(buff) {
   let year = buff.readUInt16LE(0),
-    mon = buff[2],
+    mon = buff[2]-1,
     day = buff[3],
     hrs = buff[4],
     min = buff[5],
-    sec = buff[6];
-    //msec = buff[8] * 1000 / 256;
-  return new Date([year, mon, day, hrs, min, sec])
+    sec = buff[6],
+    msec = buff[8] * 1000 / 256;
+  return new Date(year, mon, day, hrs, min, sec)
 }
 
 class MiBand extends EventEmitter$1 {
@@ -7351,8 +7351,8 @@ class MiBand extends EventEmitter$1 {
     let result = {};
     result.level = data[1];
     result.charging = !!data[2];
-    result.off_date = parseDate(data.slice(3, 11));
-    result.charge_date = parseDate(data.slice(11, 19));
+    result.off_date = parseDate(data.slice(3, 10));
+    result.charge_date = parseDate(data.slice(11, 18));
     //result.charge_num = data[10]
     result.charge_level = data[19];
     return result;
@@ -7365,7 +7365,7 @@ class MiBand extends EventEmitter$1 {
   }
 
   async getSerial() {
-    if (!this.char.info_serial) return 'unknown';
+    if (!this.char.info_serial) return undefined;
     let data = await this.char.info_serial.readValue();
     return this.textDec.decode(data)
   }
@@ -7444,7 +7444,6 @@ function delay(ms) {
 
 async function test_all(miband, log) {
 
-  log('Fetching device info...');
   let info = {
     time:     await miband.getTime(),
     battery:  await miband.getBatteryInfo(),
@@ -7452,7 +7451,11 @@ async function test_all(miband, log) {
     fw_ver:   await miband.getSwRevision(),
     serial:   await miband.getSerial(),
   };
-  log('Info:', JSON.stringify(info, null, 2));
+
+  log(`HW ver: ${info.hw_ver}  SW ver: ${info.sw_ver}`);
+  info.serial && log(`Serial: ${info.serial}`);
+  log(`Battery: ${info.battery.level}%`);
+  log(`Time: ${info.time.toLocaleString()}`);
 
   log('Notifications demo...');
   await miband.showNotification('message');
