@@ -12,7 +12,7 @@
     "start": "ecstatic ./public --port 8080",
     "build": "rollup -c ./.rollup.js",
     "watch": "rollup -c ./.rollup.js -w",
-    "gh-deploy": "gh-pages -d public",
+    "gh-deploy": "npm run build && gh-pages -d public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
