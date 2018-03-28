@@ -62,8 +62,6 @@ await miband.showNotification('message');
 
 For more API examples, see https://github.com/vshymanskyy/miband-js/blob/master/src/test.js
 
-If you're interested in Python implementation, take a look at https://github.com/vshymanskyy/miband2-python-test
-
 ---
 ## Contributing
 
