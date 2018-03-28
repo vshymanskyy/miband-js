@@ -10,7 +10,7 @@ async function test_all(miband, log) {
     time:     await miband.getTime(),
     battery:  await miband.getBatteryInfo(),
     hw_ver:   await miband.getHwRevision(),
-    fw_ver:   await miband.getSwRevision(),
+    sw_ver:   await miband.getSwRevision(),
     serial:   await miband.getSerial(),
   }
 
