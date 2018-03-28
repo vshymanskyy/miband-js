@@ -1,15 +1,6 @@
 # Mi Band 2 JS library
 
-A clean implementaation of [**Mi Band 2**](http://www.mi.com/en/miband2/) library for Browsers and Node.js, using WebBluetooth API.
-
-## Features
-- Authentication
-- Device info: time, battery status, hw/sw versions, etc.
-- Button tap event
-- Notifications: message, phone, vibrate
-- Heart Rate Monitor
-- Realtime data (soon)
-
+A clean implementation of [**Mi Band 2**](http://www.mi.com/en/miband2/) library for Browsers and Node.js, using WebBluetooth API.
 ![demo](/public/demo.png)
 
 ## Setting up
@@ -19,7 +10,7 @@ You should be able to bind it back again, but no guaranee here ;)
 
 ### Browser
 
-Head to https://tiny.cc/miband-js
+[![LIVE DEMO](/public/live-demo-btn.png)](https://tiny.cc/miband-js)
 
 You need a browser with [WebBluetooth support](https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md). Tested with:
 - Chrome on OS X (Yosemite or later)
@@ -38,6 +29,15 @@ On Linux, you need to grant Bluetooth access for Node.js:
 ```sh
 sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
 ```
+
+## Features
+
+- Authentication
+- Device info: time, battery status, hw/sw versions, etc.
+- Button tap event
+- Notifications: message, phone, vibrate
+- Heart Rate Monitor
+- Realtime data (soon)
 
 ## API usage example
 
