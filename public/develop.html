@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+  <!-- same as index.html but without service worker -->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +9,6 @@
 
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="manifest" href="manifest.json">
-    <!-- link rel="stylesheet" href="styles.css" -->
 
     <title>Mi Band 2</title>
   </head>
@@ -24,12 +24,5 @@
     </main>
 
     <script src="webapp.bundle.js"></script>
-
-    <script>
-      // Install service worker - for offline support
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('serviceworker.js');
-      }
-    </script>
   </body>
 </html>

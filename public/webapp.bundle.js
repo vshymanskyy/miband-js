@@ -1,6 +1,18 @@
 (function () {
 'use strict';
 
+function __$styleInject(css) {
+    if (!css) return;
+
+    if (typeof window == 'undefined') return;
+    var style = document.createElement('style');
+    style.setAttribute('media', 'screen');
+
+    style.innerHTML = css;
+    document.head.appendChild(style);
+    return css;
+}
+
 var global$1 = typeof global !== "undefined" ? global :
             typeof self !== "undefined" ? self :
             typeof window !== "undefined" ? window : {}
@@ -7473,11 +7485,15 @@ async function test_all(miband, log) {
 
 var test = test_all;
 
+__$styleInject("html {\n  background: gray;\n}\nbody {\n  max-width: 960px;\n  box-sizing: border-box;\n  margin: 50px auto;\n  min-height: calc(100vh - 100px);\n  background: #F0F0F0;\n  box-shadow: 0 0 96px black;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  font-family: monospace;\n}\nheader {\n  padding: 0 16px;\n  background: white;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  display: flex;\n  justify-content: space-between;\n}\nmain {\n  background: black;\n  color: white;\n  padding: 4px 16px;\n  overflow-y: scroll;\n  max-height: calc(100vh - 157px);\n}\n#output {\n  margin: 0;\n}\nh1 {\n  text-shadow: 1px 1px 0 black;\n  color: #bababa;\n  font-size: 28px;\n  margin: 8px 0;\n}\nh1 .h1-left {\n  color: #FF6D60;\n}\nh1 .h1-right {\n  color: #6CCAC9;\n}\n.btn-scan {\n  margin: 12px 0;\n  padding: 0 24px;\n  cursor: pointer;\n  background: #A9D96C;\n  border: none;\n  color: white;\n  font-weight: bold;\n  border-radius: 4px;\n}\n");
+
 const bluetooth = navigator.bluetooth;
 
 const output = document.querySelector('#output');
 
 function log$1() {
+  document.querySelector('main').style.display = 'block';
+
   output.innerHTML += [...arguments].join(' ') + '\n';
 }
 
@@ -7515,3 +7531,4 @@ async function scan() {
 document.querySelector('#scanBtn').addEventListener('click', scan);
 
 }());
+//# sourceMappingURL=webapp.bundle.js.map

@@ -7,6 +7,8 @@ import uglify from 'rollup-plugin-uglify'
 import filesize from 'rollup-plugin-filesize'
 import sizes from 'rollup-plugin-sizes'
 import json from 'rollup-plugin-json'
+import less from 'rollup-plugin-less'
+import sourcemaps from 'rollup-plugin-sourcemaps'
 
 let uglify_opts = {
   compress: {
@@ -38,9 +40,11 @@ export default {
     format: 'iife',
     name:   'MiBand'
   },
+  sourceMap: true,
   plugins: [
     eslint({
       throwOnError: true,
+      exclude: [ './node_modules/**', './src/styles/**' ]
     }),
     resolve({
       jsnext: true,
@@ -56,5 +60,9 @@ export default {
       details: true
     }),
     filesize(),
-  ],
+    less({
+      insert: true
+    }),
+    sourcemaps()
+  ]
 }

@@ -1,14 +1,17 @@
 'use strict';
 
-
 import MiBand from './miband';
 import test_all from './test';
+
+import './styles/index.less';
 
 const bluetooth = navigator.bluetooth;
 
 const output = document.querySelector('#output');
 
 function log() {
+  document.querySelector('main').style.display = 'block';
+
   output.innerHTML += [...arguments].join(' ') + '\n';
 }
 
