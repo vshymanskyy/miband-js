@@ -16,6 +16,11 @@ function log() {
 }
 
 async function scan() {
+  if (!bluetooth) {
+    log('WebBluetooth is not supported by your browser!');
+    return;
+  }
+
   try {
     log('Requesting Bluetooth Device...');
     const device = await bluetooth.requestDevice({
