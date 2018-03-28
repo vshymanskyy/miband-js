@@ -1,8 +1,9 @@
 'use strict';
 
-
 import MiBand from './miband';
 import test_all from './test';
+
+import './styles/index.less';
 
 const bluetooth = navigator.bluetooth;
 
