@@ -12,7 +12,7 @@
     "start": "ecstatic ./public --port 8080",
     "build": "rollup -c ./.rollup.js",
     "watch": "rollup -c ./.rollup.js -w",
-    "gh-deploy": "git subtree push --prefix public origin gh-pages",
+    "gh-deploy": "gh-pages -d public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "ecstatic": "^3.2.0",
+    "gh-pages": "^1.1.0",
     "rollup": "^0.56.3",
     "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-eslint": "^4.0.0",

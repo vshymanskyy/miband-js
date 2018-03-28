@@ -11,5 +11,7 @@ coverage
 # Dependency directory
 node_modules
 
+# Auto-generated files
+public/webapp.bundle.*
 rollup.build.css
 package-lock.json
