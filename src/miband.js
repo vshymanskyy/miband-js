@@ -93,7 +93,7 @@ class MiBand extends EventEmitter {
     this.char.auth = await miband2.getCharacteristic(UUID_BASE('0009'))
 
     let miband1 = await this.device.getPrimaryService(UUID_SERVICE_MIBAND_1)
-    this.char.sens =   await miband1.getCharacteristic(UUID_BASE('0001'))
+    this.char.sensor = await miband1.getCharacteristic(UUID_BASE('0001'))
     this.char.time =   await miband1.getCharacteristic(UUID_SHORT('2a2b'))
     this.char.config = await miband1.getCharacteristic(UUID_BASE('0003'))
     this.char.activ =  await miband1.getCharacteristic(UUID_BASE('0005'))
