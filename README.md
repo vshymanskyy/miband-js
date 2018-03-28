@@ -22,9 +22,9 @@ You should be able to bind it back again, but no guaranee here ;)
 Head to https://tiny.cc/miband-js
 
 You need a browser with [WebBluetooth support](https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md). Tested with:
-- Chrome on Linux (with enabled experimental flag)
-- Chrome on OS X
-- Chrome on Android (6.0+)
+- Chrome on OS X (Yosemite or later)
+- Chrome on Android (6.0 Marshmallow or later)
+- Chrome on Windows 10 and Linux (the `chrome://flags/#enable-experimental-web-platform-features` flag must be enabled)
 
 ### Node.js
 
