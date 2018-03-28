@@ -11,6 +11,7 @@
   "scripts": {
     "start": "ecstatic ./public --port 8080",
     "build": "rollup -c ./.rollup.js",
+    "watch": "rollup -c ./.rollup.js -w",
     "gh-deploy": "git subtree push --prefix public origin gh-pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,11 +26,13 @@
     "rollup-plugin-eslint": "^4.0.0",
     "rollup-plugin-filesize": "^1.5.0",
     "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-less": "^0.1.4",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.2.0",
     "rollup-plugin-node-resolve": "^3.0.3",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-sizes": "^0.4.2",
+    "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-uglify": "^3.0.0"
   }
 }
