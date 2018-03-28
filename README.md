@@ -1,6 +1,6 @@
 # Mi Band 2 JS library
 
-Playing around with the [**Mi Band 2**](http://www.mi.com/en/miband2/)
+A clean implementaation of [**Mi Band 2**](http://www.mi.com/en/miband2/) library for Browsers and Node.js, using WebBluetooth API.
 
 ## Features
 - Authentication
@@ -22,9 +22,9 @@ You should be able to bind it back again, but no guaranee here ;)
 Head to https://tiny.cc/miband-js
 
 You need a browser with [WebBluetooth support](https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md). Tested with:
-- Chrome on Linux (with enabled experimental flag)
-- Chrome on OS X
-- Chrome on Android (6.0+)
+- Chrome on OS X (Yosemite or later)
+- Chrome on Android (6.0 Marshmallow or later)
+- Chrome on Windows 10 and Linux (the `chrome://flags/#enable-experimental-web-platform-features` flag must be enabled)
 
 ### Node.js
 
@@ -62,4 +62,7 @@ await miband.showNotification('message');
 
 For more API examples, see https://github.com/vshymanskyy/miband-js/blob/master/src/test.js
 
-If you're interested in Python implementation, take a look at https://github.com/vshymanskyy/miband2-python-test
+---
+## Contributing
+
+Please check out [DEVELOPMENT.md](/DEVELOPMENT.md)
