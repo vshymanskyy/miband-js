@@ -2,6 +2,11 @@
 
 You can help this project by taking took at the [list of tasks and issues](https://github.com/vshymanskyy/miband-js/issues)
 
+## Enabling debug logs
+
+**Node.js:** set DEBUG env. variable: `DEBUG = MiBand`  
+**Browser:** open dev. console and run `localStorage.debug = 'MiBand'`, then refresh the page
+
 ## Useful info on Mi Band 2 protocol
 
 1. Leo Soares wrote a nice article here: [Mi Band 2, Part 1: Authentication](https://leojrfs.github.io/writing/miband2-part1-auth/). He also provided a [Python example](https://github.com/leojrfs/miband2).
