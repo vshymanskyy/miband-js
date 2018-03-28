@@ -8,3 +8,23 @@ You can help this project by taking took at the [list of tasks and issues](https
 2. Andrey Nikishaev described some basic BLE priciples and a good way of [intercepting original **Mi Fit App** communication on Android](https://medium.com/@a.nikishaev/how-i-hacked-xiaomi-miband-2-to-control-it-from-linux-a5bd2f36d3ad).
    Check out his [Python library implementation](https://github.com/creotiv/MiBand2).
 3. Some protocol implementation details can be found in [Freeyourgadget](https://github.com/Freeyourgadget/Gadgetbridge/tree/master/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/miband2) project.
+
+## Linux cheatsheet
+
+List all visible BLE devices to find out the MAC address:
+```sh
+sudo hcitool lescan
+```
+
+To list all descriptors of a device:
+```sh
+sudo gatttool -b YOUR_MAC -I -t random
+> connect
+> char-desc
+```
+
+Sometimes, BLE stack might fail, and the reset is needed:
+
+```sh
+sudo hciconfig hci0 reset
+```
