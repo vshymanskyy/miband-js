@@ -12,6 +12,7 @@
     "start": "ecstatic ./public --port 8080",
     "build": "rollup -c ./.rollup.js",
     "watch": "rollup -c ./.rollup.js -w",
+    "debug": "node --inspect --debug-brk ./bin/miband-test.js",
     "gh-deploy": "npm run build && gh-pages -d public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
