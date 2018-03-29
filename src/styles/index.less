@@ -30,8 +30,8 @@ main{
     background: black;
     color: white;
     padding: 4px 16px;
-    overflow-y: scroll;
-    max-height: calc(~"100vh - 157px");
+    overflow-y: auto;
+    max-height: calc(~"100vh - 164px");
 }
 
 #output{
@@ -40,16 +40,31 @@ main{
 
 h1{
     text-shadow: 1px 1px 0 black;
-    color: #bababa;
     font-size: 28px;
     margin: 10px 0;
+    cursor: pointer;
+    color: transparent;
+
+    &:hover{
+        .h1-left, .h1-right{
+            color: #bababa;
+        }
+    }
 
     .h1-left{
         color: #A9D96C;
+        transition: 0.25s ease-in-out color;
     }
 
     .h1-right{
+        margin-left: -6px;
         color: #41c5f4;
+        transition: 0.25s ease-in-out color;
+    }
+
+    a{
+        color: transparent;
+        text-decoration: none;
     }
 }
 
@@ -62,4 +77,18 @@ h1{
     color: white;
     font-weight: bold;
     border-radius: 4px;
+    outline: none;
+    transition: 0.25s ease-in-out color;
+
+    &:hover{
+        color: black;
+    }
+}
+
+.fork-me{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    transform: rotate(90deg);
 }
