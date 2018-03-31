@@ -93,8 +93,9 @@ class MiBand extends EventEmitter {
     this.char.auth = await miband2.getCharacteristic(UUID_BASE('0009'))
 
     let miband1 = await this.device.getPrimaryService(UUID_SERVICE_MIBAND_1)
-    this.char.sensor = await miband1.getCharacteristic(UUID_BASE('0001'))
     this.char.time =   await miband1.getCharacteristic(UUID_SHORT('2a2b'))
+    this.char.raw_ctrl = await miband1.getCharacteristic(UUID_BASE('0001'))
+    this.char.raw_data = await miband1.getCharacteristic(UUID_BASE('0002'))
     this.char.config = await miband1.getCharacteristic(UUID_BASE('0003'))
     this.char.activ =  await miband1.getCharacteristic(UUID_BASE('0005'))
     this.char.batt =   await miband1.getCharacteristic(UUID_BASE('0006'))
@@ -127,8 +128,9 @@ class MiBand extends EventEmitter {
     await this.authenticate()
 
     // Notifications should be enabled after auth
-    await this.startNotificationsFor('hrm_data')
-    await this.startNotificationsFor('event')
+    for (let char of ['hrm_data', 'event', 'raw_data']) {
+      await this.startNotificationsFor(char)
+    }
   }
 
   /*
@@ -207,6 +209,22 @@ class MiBand extends EventEmitter {
   }
 
   /*
+   * Pedometer
+   */
+
+  async getPedometerStats() {
+    let data = await this.char.steps.readValue()
+    data = Buffer.from(data.buffer)
+    let result = {}
+    //unknown = data.readUInt8(0)
+    result.steps = data.readUInt16LE(1)
+    //unknown = data.readUInt16LE(3) // 2 more bytes for steps? ;)
+    if (data.length >= 8)  result.distance = data.readUInt32LE(5)
+    if (data.length >= 12) result.calories = data.readUInt32LE(9)
+    return result;
+  }
+
+  /*
    * General functions
    */
 
@@ -247,6 +265,25 @@ class MiBand extends EventEmitter {
     return this.textDec.decode(data)
   }
 
+  async setUserInfo(user) {
+    let data = new Buffer(16)
+    data.writeUInt8   (0x4f, 0) // Set user info command
+
+    data.writeUInt16LE(user.born.getFullYear(), 3)
+    data.writeUInt8   (user.born.getMonth()+1, 5)
+    data.writeUInt8   (user.born.getDate(), 6)
+    switch (user.sex) {
+    case 'male':   data.writeUInt8   (0, 7); break;
+    case 'female': data.writeUInt8   (1, 7); break;
+    default:       data.writeUInt8   (2, 7); break;
+    }
+    data.writeUInt16LE(user.height,  8) // cm
+    data.writeUInt16LE(user.weight, 10) // kg
+    data.writeUInt32LE(user.id,     12) // id
+
+    await this.char.user.writeValue(AB(data))
+  }
+
   //async reboot() {
   //  await this.char.fw_ctrl.writeValue(AB([0x05]))
   //}
@@ -254,6 +291,17 @@ class MiBand extends EventEmitter {
   /*
    * RAW data
    */
+
+  async rawStart() {
+    await this.char.raw_ctrl.writeValue(AB([0x01, 0x03, 0x19]))
+    await this.hrmStart();
+    await this.char.raw_ctrl.writeValue(AB([0x02]))
+  }
+
+  async rawStop() {
+    await this.char.raw_ctrl.writeValue(AB([0x03]))
+    await this.hrmStop();
+  }
 
   /*
    * Internals
@@ -297,6 +345,10 @@ class MiBand extends EventEmitter {
       } else {
         debug('Unhandled event:', value);
       }
+    } else if (event.target.uuid === this.char.raw_data.uuid) {
+      // TODO: parse adxl362 data
+      // https://github.com/Freeyourgadget/Gadgetbridge/issues/63#issuecomment-302815121
+      debug('RAW data:', value)
     } else {
       debug(event.target.uuid, '=>', value)
     }
