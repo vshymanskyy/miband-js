@@ -7226,8 +7226,9 @@ class MiBand extends EventEmitter$1 {
     this.char.auth = await miband2.getCharacteristic(UUID_BASE('0009'));
 
     let miband1 = await this.device.getPrimaryService(UUID_SERVICE_MIBAND_1);
-    this.char.sensor = await miband1.getCharacteristic(UUID_BASE('0001'));
     this.char.time =   await miband1.getCharacteristic(UUID_SHORT('2a2b'));
+    this.char.raw_ctrl = await miband1.getCharacteristic(UUID_BASE('0001'));
+    this.char.raw_data = await miband1.getCharacteristic(UUID_BASE('0002'));
     this.char.config = await miband1.getCharacteristic(UUID_BASE('0003'));
     this.char.activ =  await miband1.getCharacteristic(UUID_BASE('0005'));
     this.char.batt =   await miband1.getCharacteristic(UUID_BASE('0006'));
@@ -7260,8 +7261,9 @@ class MiBand extends EventEmitter$1 {
     await this.authenticate();
 
     // Notifications should be enabled after auth
-    await this.startNotificationsFor('hrm_data');
-    await this.startNotificationsFor('event');
+    for (let char of ['hrm_data', 'event', 'raw_data']) {
+      await this.startNotificationsFor(char);
+    }
   }
 
   /*
@@ -7340,6 +7342,22 @@ class MiBand extends EventEmitter$1 {
   }
 
   /*
+   * Pedometer
+   */
+
+  async getPedometerStats() {
+    let data = await this.char.steps.readValue();
+    data = Buffer.from(data.buffer);
+    let result = {};
+    //unknown = data.readUInt8(0)
+    result.steps = data.readUInt16LE(1);
+    //unknown = data.readUInt16LE(3) // 2 more bytes for steps? ;)
+    if (data.length >= 8)  result.distance = data.readUInt32LE(5);
+    if (data.length >= 12) result.calories = data.readUInt32LE(9);
+    return result;
+  }
+
+  /*
    * General functions
    */
 
@@ -7380,6 +7398,25 @@ class MiBand extends EventEmitter$1 {
     return this.textDec.decode(data)
   }
 
+  async setUserInfo(user) {
+    let data = new Buffer(16);
+    data.writeUInt8   (0x4f, 0); // Set user info command
+
+    data.writeUInt16LE(user.born.getFullYear(), 3);
+    data.writeUInt8   (user.born.getMonth()+1, 5);
+    data.writeUInt8   (user.born.getDate(), 6);
+    switch (user.sex) {
+    case 'male':   data.writeUInt8   (0, 7); break;
+    case 'female': data.writeUInt8   (1, 7); break;
+    default:       data.writeUInt8   (2, 7); break;
+    }
+    data.writeUInt16LE(user.height,  8); // cm
+    data.writeUInt16LE(user.weight, 10); // kg
+    data.writeUInt32LE(user.id,     12); // id
+
+    await this.char.user.writeValue(AB(data));
+  }
+
   //async reboot() {
   //  await this.char.fw_ctrl.writeValue(AB([0x05]))
   //}
@@ -7387,6 +7424,17 @@ class MiBand extends EventEmitter$1 {
   /*
    * RAW data
    */
+
+  async rawStart() {
+    await this.char.raw_ctrl.writeValue(AB([0x01, 0x03, 0x19]));
+    await this.hrmStart();
+    await this.char.raw_ctrl.writeValue(AB([0x02]));
+  }
+
+  async rawStop() {
+    await this.char.raw_ctrl.writeValue(AB([0x03]));
+    await this.hrmStop();
+  }
 
   /*
    * Internals
@@ -7430,6 +7478,10 @@ class MiBand extends EventEmitter$1 {
       } else {
         debug$1('Unhandled event:', value);
       }
+    } else if (event.target.uuid === this.char.raw_data.uuid) {
+      // TODO: parse adxl362 data
+      // https://github.com/Freeyourgadget/Gadgetbridge/issues/63#issuecomment-302815121
+      debug$1('RAW data:', value);
     } else {
       debug$1(event.target.uuid, '=>', value);
     }
@@ -7457,6 +7509,9 @@ async function test_all(miband, log) {
   log(`Battery: ${info.battery.level}%`);
   log(`Time: ${info.time.toLocaleString()}`);
 
+  let ped = await miband.getPedometerStats();
+  log('Pedometer:', JSON.stringify(ped));
+
   log('Notifications demo...');
   await miband.showNotification('message');
   await delay(3000);
@@ -7483,12 +7538,17 @@ async function test_all(miband, log) {
   await delay(30000);
   await miband.hrmStop();
 
+  //log('RAW data (no decoding)...')
+  //miband.rawStart();
+  //await delay(30000);
+  //miband.rawStop();
+
   log('Finished.');
 }
 
 var test = test_all;
 
-__$styleInject("html {\n  background: #eee;\n}\nbody {\n  max-width: 960px;\n  box-sizing: border-box;\n  margin: 50px auto;\n  min-height: calc(100vh - 100px);\n  background: #000;\n  box-shadow: 0 0 96px black;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  font-family: monospace;\n}\nheader {\n  padding: 4px 16px 0px;\n  background: #333;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  display: flex;\n  justify-content: space-between;\n  font-family: \"Arial\";\n}\nmain {\n  background: black;\n  color: white;\n  padding: 4px 16px;\n  overflow-y: scroll;\n  max-height: calc(100vh - 157px);\n}\n#output {\n  margin: 0;\n}\nh1 {\n  text-shadow: 1px 1px 0 black;\n  color: #bababa;\n  font-size: 28px;\n  margin: 10px 0;\n}\nh1 .h1-left {\n  color: #A9D96C;\n}\nh1 .h1-right {\n  color: #41c5f4;\n}\n.btn-scan {\n  margin: 12px 0;\n  padding: 0 24px;\n  cursor: pointer;\n  background: #A9D96C;\n  border: none;\n  color: white;\n  font-weight: bold;\n  border-radius: 4px;\n}\n");
+__$styleInject("html {\n  background: #eee;\n}\nbody {\n  max-width: 960px;\n  box-sizing: border-box;\n  margin: 50px auto;\n  min-height: calc(100vh - 100px);\n  background: #000;\n  box-shadow: 0 0 96px black;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  font-family: monospace;\n}\nheader {\n  padding: 4px 16px 0px;\n  background: #333;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  display: flex;\n  justify-content: space-between;\n  font-family: \"Arial\";\n}\nmain {\n  background: black;\n  color: white;\n  padding: 4px 16px;\n  overflow-y: auto;\n  max-height: calc(100vh - 164px);\n}\n#output {\n  margin: 0;\n}\nh1 {\n  text-shadow: 1px 1px 0 black;\n  font-size: 28px;\n  margin: 10px 0;\n  cursor: pointer;\n  color: transparent;\n}\nh1:hover .h1-left,\nh1:hover .h1-right {\n  color: #bababa;\n}\nh1 .h1-left {\n  color: #A9D96C;\n  transition: 0.25s ease-in-out color;\n}\nh1 .h1-right {\n  margin-left: -6px;\n  color: #41c5f4;\n  transition: 0.25s ease-in-out color;\n}\nh1 a {\n  color: transparent;\n  text-decoration: none;\n}\n.btn-scan {\n  margin: 12px 0;\n  padding: 0 24px;\n  cursor: pointer;\n  background: #A9D96C;\n  border: none;\n  color: white;\n  font-weight: bold;\n  border-radius: 4px;\n  outline: none;\n  transition: 0.25s ease-in-out color;\n}\n.btn-scan:hover {\n  color: black;\n}\n.fork-me {\n  position: absolute;\n  top: 0;\n  right: 0;\n  border: 0;\n  transform: rotate(90deg);\n}\n");
 
 const bluetooth = navigator.bluetooth;
 
