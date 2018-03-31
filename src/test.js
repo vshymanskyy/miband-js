@@ -19,6 +19,9 @@ async function test_all(miband, log) {
   log(`Battery: ${info.battery.level}%`);
   log(`Time: ${info.time.toLocaleString()}`);
 
+  let ped = await miband.getPedometerStats()
+  log('Pedometer:', JSON.stringify(ped))
+
   log('Notifications demo...')
   await miband.showNotification('message');
   await delay(3000);
@@ -44,6 +47,11 @@ async function test_all(miband, log) {
   await miband.hrmStart();
   await delay(30000);
   await miband.hrmStop();
+
+  //log('RAW data (no decoding)...')
+  //miband.rawStart();
+  //await delay(30000);
+  //miband.rawStop();
 
   log('Finished.')
 }
