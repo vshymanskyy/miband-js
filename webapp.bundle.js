@@ -7390,12 +7390,18 @@ class MiBand extends EventEmitter$1 {
 
   async getHwRevision() {
     let data = await this.char.info_hwrev.readValue();
-    return this.textDec.decode(data)
+    data = this.textDec.decode(data);
+    if (data.startsWith('V') || data.startsWith('v'))
+      data = data.substring(1);
+    return data
   }
 
   async getSwRevision() {
     let data = await this.char.info_swrev.readValue();
-    return this.textDec.decode(data)
+    data = this.textDec.decode(data);
+    if (data.startsWith('V') || data.startsWith('v'))
+      data = data.substring(1);
+    return data
   }
 
   async setUserInfo(user) {
@@ -7548,7 +7554,7 @@ async function test_all(miband, log) {
 
 var test = test_all;
 
-__$styleInject("html {\n  background: #eee;\n}\nbody {\n  max-width: 960px;\n  box-sizing: border-box;\n  margin: 50px auto;\n  min-height: calc(100vh - 100px);\n  background: #000;\n  box-shadow: 0 0 96px black;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  font-family: monospace;\n}\nheader {\n  padding: 4px 16px 0px;\n  background: #333;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  display: flex;\n  justify-content: space-between;\n  font-family: \"Arial\";\n}\nmain {\n  background: black;\n  color: white;\n  padding: 4px 16px;\n  overflow-y: auto;\n  max-height: calc(100vh - 164px);\n}\n#output {\n  margin: 0;\n}\nh1 {\n  text-shadow: 1px 1px 0 black;\n  font-size: 28px;\n  margin: 10px 0;\n  cursor: pointer;\n  color: transparent;\n}\nh1:hover .h1-left,\nh1:hover .h1-right {\n  color: #bababa;\n}\nh1 .h1-left {\n  color: #A9D96C;\n  transition: 0.25s ease-in-out color;\n}\nh1 .h1-right {\n  margin-left: -6px;\n  color: #41c5f4;\n  transition: 0.25s ease-in-out color;\n}\nh1 a {\n  color: transparent;\n  text-decoration: none;\n}\n.btn-scan {\n  margin: 12px 0;\n  padding: 0 24px;\n  cursor: pointer;\n  background: #A9D96C;\n  border: none;\n  color: white;\n  font-weight: bold;\n  border-radius: 4px;\n  outline: none;\n  transition: 0.25s ease-in-out color;\n}\n.btn-scan:hover {\n  color: black;\n}\n.fork-me {\n  position: absolute;\n  top: 0;\n  right: 0;\n  border: 0;\n  transform: rotate(90deg);\n}\n");
+__$styleInject("html {\n  background: #eee;\n}\nbody {\n  max-width: 960px;\n  width: 80%;\n  box-sizing: border-box;\n  margin: 50px auto;\n  min-height: calc(100vh - 100px);\n  background: #000;\n  box-shadow: 0 0 96px black;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  font-family: monospace;\n}\nheader {\n  padding: 4px 16px 0px;\n  background: #333;\n  border-radius: 16px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  display: flex;\n  justify-content: space-between;\n  font-family: \"Arial\";\n}\nmain {\n  background: black;\n  color: white;\n  padding: 4px 16px;\n  overflow-y: auto;\n  max-height: calc(100vh - 164px);\n}\n#output {\n  margin: 0;\n}\nh1 {\n  text-shadow: 1px 1px 0 black;\n  font-size: 28px;\n  margin: 10px 0;\n  cursor: pointer;\n  color: transparent;\n}\nh1:hover .h1-left,\nh1:hover .h1-right {\n  color: #fff;\n}\nh1 .h1-left {\n  color: #A9D96C;\n  transition: 0.25s ease-in-out color;\n}\nh1 .h1-right {\n  margin-left: -6px;\n  color: #41c5f4;\n  transition: 0.25s ease-in-out color;\n}\nh1 a {\n  color: transparent;\n  text-decoration: none;\n}\n.btn-scan {\n  margin: 12px 0;\n  padding: 0 24px;\n  cursor: pointer;\n  background: #A9D96C;\n  border: none;\n  color: white;\n  font-weight: bold;\n  border-radius: 4px;\n  outline: none;\n  transition: 0.25s ease-in-out color;\n}\n.btn-scan:hover {\n  color: black;\n}\n.fork-me {\n  position: fixed;\n  top: 0;\n  right: 0;\n  border: 0;\n  z-index: -1;\n  transform: rotate(90deg);\n}\n");
 
 const bluetooth = navigator.bluetooth;
 
