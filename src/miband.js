@@ -257,12 +257,18 @@ class MiBand extends EventEmitter {
 
   async getHwRevision() {
     let data = await this.char.info_hwrev.readValue()
-    return this.textDec.decode(data)
+    data = this.textDec.decode(data)
+    if (data.startsWith('V') || data.startsWith('v'))
+      data = data.substring(1)
+    return data
   }
 
   async getSwRevision() {
     let data = await this.char.info_swrev.readValue()
-    return this.textDec.decode(data)
+    data = this.textDec.decode(data)
+    if (data.startsWith('V') || data.startsWith('v'))
+      data = data.substring(1)
+    return data
   }
 
   async setUserInfo(user) {
