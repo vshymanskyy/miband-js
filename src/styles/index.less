@@ -4,6 +4,7 @@ html{
 
 body{
     max-width: 960px;
+    width: 80%;
     box-sizing: border-box;
     margin: 50px auto;
     min-height: calc(~"100vh - 100px");
@@ -47,7 +48,7 @@ h1{
 
     &:hover{
         .h1-left, .h1-right{
-            color: #bababa;
+            color: #fff;
         }
     }
 
@@ -86,9 +87,10 @@ h1{
 }
 
 .fork-me{
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     border: 0;
+    z-index: -1;
     transform: rotate(90deg);
 }
