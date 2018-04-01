@@ -1,6 +1,6 @@
 {
   "name": "miband",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Mi Band 2 JS library",
   "author": "Volodymyr Shymanskyy",
   "license": "GPLv3",
@@ -38,6 +38,7 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "keywords": [
+    "xiaomi",
     "miband2",
     "webbluetooth",
     "nodejs"
