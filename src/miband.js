@@ -6,19 +6,15 @@ const debug = require('debug')('MiBand');
 
 const UUID_BASE = (x) => `0000${x}-0000-3512-2118-0009af100700`
 
-// TODO: eliminate UUID_SHORT when this is fixed:
-// https://github.com/thegecko/webbluetooth/issues/5
-const UUID_SHORT = (x) => `0000${x}-0000-1000-8000-00805f9b34fb`
-
-const UUID_SERVICE_GENERIC_ACCESS =     UUID_SHORT('1800')
-const UUID_SERVICE_GENERIC_ATTRIBUTE =  UUID_SHORT('1801')
-const UUID_SERVICE_DEVICE_INFORMATION = UUID_SHORT('180a')
+const UUID_SERVICE_GENERIC_ACCESS =     0x1800
+const UUID_SERVICE_GENERIC_ATTRIBUTE =  0x1801
+const UUID_SERVICE_DEVICE_INFORMATION = 0x180a
 const UUID_SERVICE_FIRMWARE =           UUID_BASE('1530')
-const UUID_SERVICE_ALERT_NOTIFICATION = UUID_SHORT('1811')
-const UUID_SERVICE_IMMEDIATE_ALERT =    UUID_SHORT('1802')
-const UUID_SERVICE_HEART_RATE =         UUID_SHORT('180d')
-const UUID_SERVICE_MIBAND_1 =           UUID_SHORT('fee0')
-const UUID_SERVICE_MIBAND_2 =           UUID_SHORT('fee1')
+const UUID_SERVICE_ALERT_NOTIFICATION = 0x1811
+const UUID_SERVICE_IMMEDIATE_ALERT =    0x1802
+const UUID_SERVICE_HEART_RATE =         0x180d
+const UUID_SERVICE_MIBAND_1 =           0xfee0
+const UUID_SERVICE_MIBAND_2 =           0xfee1
 
 // This is a helper function that constructs an ArrayBuffer based on arguments
 const AB = function() {
@@ -93,7 +89,7 @@ class MiBand extends EventEmitter {
     this.char.auth = await miband2.getCharacteristic(UUID_BASE('0009'))
 
     let miband1 = await this.device.getPrimaryService(UUID_SERVICE_MIBAND_1)
-    this.char.time =   await miband1.getCharacteristic(UUID_SHORT('2a2b'))
+    this.char.time =   await miband1.getCharacteristic(0x2a2b)
     this.char.raw_ctrl = await miband1.getCharacteristic(UUID_BASE('0001'))
     this.char.raw_data = await miband1.getCharacteristic(UUID_BASE('0002'))
     this.char.config = await miband1.getCharacteristic(UUID_BASE('0003'))
@@ -104,17 +100,17 @@ class MiBand extends EventEmitter {
     this.char.event =  await miband1.getCharacteristic(UUID_BASE('0010'))
 
     let hrm = await this.device.getPrimaryService(UUID_SERVICE_HEART_RATE)
-    this.char.hrm_ctrl = await hrm.getCharacteristic(UUID_SHORT('2a39'))
-    this.char.hrm_data = await hrm.getCharacteristic(UUID_SHORT('2a37'))
+    this.char.hrm_ctrl = await hrm.getCharacteristic(0x2a39)
+    this.char.hrm_data = await hrm.getCharacteristic(0x2a37)
 
     let imm_alert = await this.device.getPrimaryService(UUID_SERVICE_IMMEDIATE_ALERT)
-    this.char.alert = await imm_alert.getCharacteristic(UUID_SHORT('2a06'))
+    this.char.alert = await imm_alert.getCharacteristic(0x2a06)
 
     let devinfo = await this.device.getPrimaryService(UUID_SERVICE_DEVICE_INFORMATION)
-    this.char.info_hwrev = await devinfo.getCharacteristic(UUID_SHORT('2a27'))
-    this.char.info_swrev = await devinfo.getCharacteristic(UUID_SHORT('2a28'))
+    this.char.info_hwrev = await devinfo.getCharacteristic(0x2a27)
+    this.char.info_swrev = await devinfo.getCharacteristic(0x2a28)
     try { // Serial Number is in blocklist of WebBluetooth spec
-      this.char.info_serial = await devinfo.getCharacteristic(UUID_SHORT('2a25'))
+      this.char.info_serial = await devinfo.getCharacteristic(0x2a25)
     } catch(error) {
       // do nothing
     }
