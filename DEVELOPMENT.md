@@ -1,6 +1,6 @@
 # Mi Band 2 JS library: Development
 
-You can help this project by taking took at the [list of tasks and issues](https://github.com/vshymanskyy/miband-js/issues)
+You can help this project by taking a look at the [list of tasks and issues](https://github.com/vshymanskyy/miband-js/issues)
 
 ## Enabling debug logs
 
