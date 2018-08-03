@@ -1,3 +1,8 @@
+[![NPM version](https://img.shields.io/npm/v/miband.svg)](https://www.npmjs.com/package/miband)
+[![NPM download](https://img.shields.io/npm/dm/miband.svg)](https://www.npmjs.com/package/miband)
+[![GitHub issues](https://img.shields.io/github/issues/vshymanskyy/miband-js.svg)](https://github.com/vshymanskyy/miband-js/issues)
+[![GitHub license](https://img.shields.io/github/license/vshymanskyy/miband-js.svg)](https://github.com/vshymanskyy/miband-js)
+
 # Mi Band 2 JS library
 
 A clean implementation of [**Mi Band 2**](http://www.mi.com/en/miband2/) library for Browsers and Node.js, using WebBluetooth API.
