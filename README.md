@@ -1,3 +1,5 @@
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
+
 [![NPM version](https://img.shields.io/npm/v/miband.svg)](https://www.npmjs.com/package/miband)
 [![NPM download](https://img.shields.io/npm/dm/miband.svg)](https://www.npmjs.com/package/miband)
 [![GitHub issues](https://img.shields.io/github/issues/vshymanskyy/miband-js.svg)](https://github.com/vshymanskyy/miband-js/issues)
